@@ -2,11 +2,6 @@ library(ggplot2)
 source("lm/read-rasters.R")
 
 
-# plot(yields[[9]])
-# plot(ndvis[[9]])
-# plot(evis[[9]])
-# s_3 and s_4 are SUS!
-
 lm_for_field <- function(yield_raster, index_raster) {
   i_df <- as.data.frame(index_raster, xy = TRUE)
   i_name <- ""
@@ -38,7 +33,7 @@ lm_for_field <- function(yield_raster, index_raster) {
     ylab = "Qx/ha",
     xlab = i_name,
     main = paste("y=",round(res$coefficients[[1]],4),"x+",round(res$coefficients[[2]],8),"
-    R^2=",round(res$r.squared*100,4))
+    R^2=",round(res$r.squared,4))
   )
 
   abline(
@@ -63,45 +58,54 @@ lm_for_dataset <- function(yields, indices) {
 
 
 
-lm_for_dataset(yields_3_98, ndvis)
-lm_for_dataset(yields_3_98, evis)
-
-lm_for_dataset(yields_5_95, ndvis)
-lm_for_dataset(yields_5_95, evis)
-
-lm_for_dataset(yields_10_90, ndvis)
-lm_for_dataset(yields_10_90, evis)
+lm_for_dataset(yields_5_95_p, ndvis)
+lm_for_dataset(yields_5_95_p, evis)
+lm_for_dataset(yields_5_95_fm, ndvis_fm)
+lm_for_dataset(yields_5_95_fm, evis_fm)
 
 lm_for_dataset(yields_10_90_p, ndvis)
 lm_for_dataset(yields_10_90_p, evis)
-
 lm_for_dataset(yields_10_90_fm, ndvis_fm)
 lm_for_dataset(yields_10_90_fm, evis_fm)
+
+lm_for_dataset(yields_15_85_p, ndvis)
+lm_for_dataset(yields_15_85_p, evis)
+lm_for_dataset(yields_15_85_fm, ndvis_fm)
+lm_for_dataset(yields_15_85_fm, evis_fm)
+
+lm_for_dataset(yields_20_80_p, ndvis)
+lm_for_dataset(yields_20_80_p, evis)
+lm_for_dataset(yields_20_80_fm, ndvis_fm)
+lm_for_dataset(yields_20_80_fm, evis_fm)
+
+
 
 plot(ndvis_fm[[7]])
 lm_for_field(yields_10_90_fm[[1]], evis_fm[[1]])
 
-lm_for_dataset(yields_25_75_fm, ndvis_fm)
-lm_for_field(yields_25_75_fm[[4]], ndvis_fm[[4]])
-lm_for_dataset(yields_25_75_fm, evis_fm)
 
 
+# # best candidates:
+# # what's up with these images?
+# plot(yields_10_90_fm[[8]])
+# plot(evis_fm[[8]])
+# lm_for_field(yields_10_90_fm[[8]], ndvis_fm[[8]])
+#
+# plot(yields_5_95[[1]])
+# plot(evis[[1]])
+# lm_for_field(yields_5_95[[1]], ndvis[[1]])
+#
+# plot(yields_25_75_fm[[4]])
+# plot(ndvis_fm[[4]])
+# lm_for_field(yields_25_75_fm[[4]], ndvis_fm[[4]])
 
-# best candidates:
-# what's up with these images?
-plot(yields_10_90_fm[[8]])
-plot(evis_fm[[8]])
-lm_for_field(yields_10_90_fm[[8]], ndvis_fm[[8]])
-
-plot(yields_5_95[[1]])
-plot(evis[[1]])
-lm_for_field(yields_5_95[[1]], ndvis[[1]])
-
-plot(yields_25_75_fm[[4]])
-plot(ndvis_fm[[4]])
-lm_for_field(yields_25_75_fm[[4]], ndvis_fm[[4]])
-
-
+# plot(yields_5_95_fm[[8]])
+# plot(ndvis[[8]])
+# plot(evis[[8]])
+# plot(yields_5_95_fm[[1]])
+# plot(yields_5_95_p[[9]])
+# plot(yields_5_95_p[[1]])
+# plot(evis[[9]])
 
 
 # TODO:
