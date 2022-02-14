@@ -82,33 +82,3 @@ lm_for_dataset(yields_20_80_fm, evis_fm)
 
 plot(ndvis_fm[[7]])
 lm_for_field(yields_10_90_fm[[1]], evis_fm[[1]])
-
-
-
-# # best candidates:
-# # what's up with these images?
-# plot(yields_10_90_fm[[8]])
-# plot(evis_fm[[8]])
-# lm_for_field(yields_10_90_fm[[8]], ndvis_fm[[8]])
-#
-# plot(yields_5_95[[1]])
-# plot(evis[[1]])
-# lm_for_field(yields_5_95[[1]], ndvis[[1]])
-#
-# plot(yields_25_75_fm[[4]])
-# plot(ndvis_fm[[4]])
-# lm_for_field(yields_25_75_fm[[4]], ndvis_fm[[4]])
-
-# plot(yields_5_95_fm[[8]])
-# plot(ndvis[[8]])
-# plot(evis[[8]])
-# plot(yields_5_95_fm[[1]])
-# plot(yields_5_95_p[[9]])
-# plot(yields_5_95_p[[1]])
-# plot(evis[[9]])
-
-
-# TODO:
-# cherry-pick best fields
-# finish-up LM
-# start with forest regression
