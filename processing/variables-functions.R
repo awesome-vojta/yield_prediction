@@ -2,10 +2,10 @@
 
 BELOW <- 4
 ABOVE <- 5
-MOIST <- "Moisture"
-YIELD <- "VRYIELDMAS"
-SWATH <- "SWATHWIDTH"
-DIST <- "DISTANCE"
+MOIST <- "Moisture"   # yield moist level
+YIELD <- "VRYIELDMAS" # total yield mass
+SWATH <- "SWATHWIDTH" # swath width (combine gathering)
+DIST <- "DISTANCE"    # distance from last yield measuring point
 
 INDEX_CLIP_FOLDER  <- "processing/04_indices_clipped/"
 FILTERED_FOLDER    <- "processing/05_filtered/"
@@ -60,7 +60,7 @@ filter_all_point_attributes <- function (shapefile, below_percentile, above_perc
 
 interpolate_point_layer <- function(srcfile, pixel_size) {
   layer_number <- 0
-  attribute <- 2
+  attribute <- 2 # VRYIELDMAS
   type <- 0
   file_name <- sub(pattern = "(.*)\\..*$",
                    replacement = "\\1",
@@ -216,8 +216,3 @@ clip_by_mask <- function(input, output, mask) {
     OUTPUT = output
   )
 }
-
-
-
-
-
