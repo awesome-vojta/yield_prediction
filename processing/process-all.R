@@ -8,7 +8,7 @@ qgis_configure()
 saga <- saga_gis(saga_bin = "C:/dev/saga-8.0.1_x64/saga_cmd.exe")
 
 setwd("C:/Users/vojte/Documents/01_VSE/00_baka/05_r_proj")
-setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+# setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 
 source(file = "processing/variables-functions.R")
 
