@@ -2,83 +2,114 @@ library(ggplot2)
 source("lm/read-rasters.R")
 
 
-lm_for_field <- function(yield_raster, index_raster) {
+get_yield_index_dataframe <- function(yield_raster, index_raster) {
   i_df <- as.data.frame(index_raster, xy = TRUE)
-  i_name <- ""
-  if(grepl("NDVI", colnames(i_df)[3], T)) {
-    i_name <- "NDVI"
-  } else {
-    i_name <- "EVI"
-  }
-  colnames(i_df) <- c("x","y",i_name)
-  
   y_df <- as.data.frame(yield_raster, xy = TRUE)
-  y_df[4] <- y_df[3] * 10 # ton -> quintal conversion
-  colnames(y_df) <- c("x","y","t/ha","Qx/ha")
-  
-  y_values <- unlist(y_df[4])
-  i_values <- unlist(i_df[3])
-  yi_df <- data.frame(y_values, i_values)
-  
+  y_df[4] <- y_df[3] * 10                             # ton -> quintal conversion
+  yi_df <- data.frame(unlist(y_df[1]), unlist(y_df[2]), unlist(y_df[4]), unlist(i_df[3]))
+  yi_df <- yi_df[complete.cases(yi_df), ]             # remove NA's
+  colnames(yi_df) <- c("x_coor","y_coor", "yield", get_index_name(index_raster))
+  return(yi_df)
+}
 
-  
-  res <- summary(
-    lm(
-      formula = i_values ~ y_values,
-      data = yi_df
-    )
-  )
-    plot(
-    y_values ~ i_values,
+plot_linear_model <- function(yi_df, res) {
+  plot(
+    yield ~ yi_df[[4]],
     ylab = "Qx/ha",
-    xlab = i_name,
-    main = paste("y=",round(res$coefficients[[1]],4),"x+",round(res$coefficients[[2]],8),"
+    xlab = colnames(yi_df)[4],
+    data = yi_df,
+    main = paste("y=",round(res$coefficients[[1]],4),"x=",round(res$coefficients[[2]],8),"
     R^2=",round(res$r.squared,4))
   )
-
   abline(
    lm(
-     formula = y_values ~ i_values,
+     formula = yield ~ yi_df[[4]],
      data = yi_df
    ),
    col = "red"
   )
-  print(res$r.squared)
-  return(res$r.squared)
 }
 
-lm_for_dataset <- function(yields, indices) {
-  r_sq <- vector("numeric", length(yields))
-  for (i in seq_along(yields)) {
-    r_sq[i] <- lm_for_field(yields[[i]], indices[[i]])
+get_linear_model_for_field <- function(yi_df) {
+  res <- summary(
+    lm(
+      formula = yield ~ yi_df[[4]],
+      data = yi_df
+    )
+  )
+  return(res)
+}
+
+get_index_name <- function(index_raster) {
+  i_name <- ""
+  if(grepl("NDVI", index_raster@data@names, T)) {
+    i_name <- "NDVI"
+  } else {
+    i_name <- "EVI"
   }
-  print("avg: ")
-  print(mean(r_sq))
+  return(i_name)
 }
 
+get_linear_model_for_dataset <- function(yields, indices) {
+  avg_rsq <-  vector("numeric", length(yields))
+  for (i in seq_along(yields)) {
+    df <- get_yield_index_dataframe(yields[[i]], indices[[i]])
+    res <- get_linear_model_for_field(df)
+    # par(mfrow=c(2,2))
+    # plot_linear_model(df, res)
+    writeLines("_____________")
+    writeLines(paste0("Field: ", gsub("_interpolated_aligned_clip","", yields[[i]]@data@names)))
+    writeLines(paste0("R^2:   ", round(res$r.squared,4)))
+    writeLines(paste0("x:     ", round(res$coefficients[[2]],4)))
+    avg_rsq[i] <- res$r.squared
+  }
+  writeLines(paste0("avg R^2: ", round(mean(avg_rsq),4)))
+}
 
+prewriteLines_dataset <-function (str) {
+  str <- paste("### ",str," ###",sep="")
+  writeLines("######################")
+  writeLines(str)
+  writeLines("######################")
+}
 
-lm_for_dataset(yields_5_95_p, ndvis)
-lm_for_dataset(yields_5_95_p, evis)
-lm_for_dataset(yields_5_95_fm, ndvis_fm)
-lm_for_dataset(yields_5_95_fm, evis_fm)
+prewriteLines_dataset("5_95_p ~ ndvis")
+get_linear_model_for_dataset(yields_5_95_p, ndvis)
+prewriteLines_dataset("5_95_p ~ evis")
+get_linear_model_for_dataset(yields_5_95_p, evis)
+prewriteLines_dataset("yields_5_95_fm ~ ndvis_fm")
+get_linear_model_for_dataset(yields_5_95_fm, ndvis_fm)
+prewriteLines_dataset("yields_5_95_fm ~ evis_fm")
+get_linear_model_for_dataset(yields_5_95_fm, evis_fm)
 
-lm_for_dataset(yields_10_90_p, ndvis)
-lm_for_dataset(yields_10_90_p, evis)
-lm_for_dataset(yields_10_90_fm, ndvis_fm)
-lm_for_dataset(yields_10_90_fm, evis_fm)
+prewriteLines_dataset("yields_10_90_p ~ ndvis")
+get_linear_model_for_dataset(yields_10_90_p, ndvis)
+prewriteLines_dataset("yields_10_90_p ~ evis")
+get_linear_model_for_dataset(yields_10_90_p, evis)
+prewriteLines_dataset("yields_10_90_fm ~ ndvis_fm")
+get_linear_model_for_dataset(yields_10_90_fm, ndvis_fm)
+prewriteLines_dataset("yields_10_90_fm ~ evis_fm")
+get_linear_model_for_dataset(yields_10_90_fm, evis_fm)
 
-lm_for_dataset(yields_15_85_p, ndvis)
-lm_for_dataset(yields_15_85_p, evis)
-lm_for_dataset(yields_15_85_fm, ndvis_fm)
-lm_for_dataset(yields_15_85_fm, evis_fm)
+prewriteLines_dataset("yields_15_85_p ~ ndvis")
+get_linear_model_for_dataset(yields_15_85_p, ndvis)
+prewriteLines_dataset("yields_15_85_p ~ evis")
+get_linear_model_for_dataset(yields_15_85_p, evis)
+prewriteLines_dataset("yields_15_85_fm ~ ndvis_fm")
+get_linear_model_for_dataset(yields_15_85_fm, ndvis_fm)
+prewriteLines_dataset("yields_15_85_fm ~ evis_fm")
+get_linear_model_for_dataset(yields_15_85_fm, evis_fm)
 
-lm_for_dataset(yields_20_80_p, ndvis)
-lm_for_dataset(yields_20_80_p, evis)
-lm_for_dataset(yields_20_80_fm, ndvis_fm)
-lm_for_dataset(yields_20_80_fm, evis_fm)
+prewriteLines_dataset("yields_20_80_p ~ ndvis")
+get_linear_model_for_dataset(yields_20_80_p, ndvis)
+prewriteLines_dataset("yields_20_80_p ~ evis")
+get_linear_model_for_dataset(yields_20_80_p, evis)
+prewriteLines_dataset("yields_20_80_fm ~ ndvis_fm")
+get_linear_model_for_dataset(yields_20_80_fm, ndvis_fm)
+prewriteLines_dataset("yields_20_80_fm ~ evis_fm")
+get_linear_model_for_dataset(yields_20_80_fm, evis_fm)
 
 
 
 plot(ndvis_fm[[7]])
-lm_for_field(yields_10_90_fm[[1]], evis_fm[[1]])
+# get_linear_model_for_field(yields_10_90_fm[[1]], evis_fm[[1]])
