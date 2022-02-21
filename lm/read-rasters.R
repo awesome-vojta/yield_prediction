@@ -1,5 +1,21 @@
 library(raster)
 
+bind_into_df <- function(rasters, value_col_name) {
+
+  # initialize empty df
+  df <- data.frame(double(),double(),double())
+  colnames(df) <- c("x","y", value_col_name)
+
+  # bind
+  for (raster in rasters) {
+    raster_df <- as.data.frame(raster, xy=TRUE)
+    colnames(raster_df) <- c("x","y", value_col_name)
+    no_missing_values <- raster_df[complete.cases(raster_df), ]
+    df <- rbind(df, no_missing_values)
+  }
+  return(df)
+}
+
 yields_5_95_p <- c(
   raster("lm/yields/yields_5_95_p/a_dilec_5_95_3_interpolated_aligned_clip.tif"),
   raster("lm/yields/yields_5_95_p/a_mrazirna_5_95_3_interpolated_aligned_clip.tif"),
