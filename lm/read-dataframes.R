@@ -13,6 +13,11 @@ evis             <- bind_into_df(evis,            "EVI")
 ndvis_fm         <- bind_into_df(ndvis_fm,        "NDVI")
 evis_fm          <- bind_into_df(evis_fm,         "EVI")
 
+elev_5_95_p <- bind_into_df(elev_5_95_p,   "elev")
+moist_5_95_p <- bind_into_df(moist_5_95_p, "moist")
+swat_5_95_p <- bind_into_df(swat_5_95_p,   "swat")
+dist_5_95_p <- bind_into_df(dist_5_95_p,   "dist")
+
 indices <- merge(ndvis, evis, by=c("x","y"))
 indices_fm <- merge(ndvis_fm, evis_fm, by=c("x","y"))
 
@@ -26,6 +31,11 @@ fields_10_f <- merge(x = yields_10_90_fm, y = indices_fm, by=c("x","y"), all.x =
 fields_15_f <- merge(x = yields_15_85_fm, y = indices_fm, by=c("x","y"), all.x = TRUE)
 fields_20_f <- merge(x = yields_20_80_fm, y = indices_fm, by=c("x","y"), all.x = TRUE)
 
+others_5_p <- merge(x = elev_5_95_p, y = moist_5_95_p, by = c("x","y"), all.x = TRUE)
+others_5_p <- merge(x = others_5_p, y = swat_5_95_p, by = c("x","y"), all.x = TRUE)
+others_5_p <- merge(x = others_5_p, y = dist_5_95_p, by = c("x","y"), all.x = TRUE)
+
+fields_with_others_5_p <- merge(x = fields_5_p, y = others_5_p, by = c("x","y"), all.x = TRUE)
 
 save(fields_5_p, file =  "lm/fields/fields_5_p.Rda")
 save(fields_10_p, file = "lm/fields/fields_10_p.Rda")
@@ -36,4 +46,6 @@ save(fields_5_f, file =  "lm/fields/fields_5_f.Rda")
 save(fields_10_f, file = "lm/fields/fields_10_f.Rda")
 save(fields_15_f, file = "lm/fields/fields_15_f.Rda")
 save(fields_20_f, file = "lm/fields/fields_20_f.Rda")
+
+save(fields_with_others_5_p, file = "lm/fields/fields_with_others_5_p")
 

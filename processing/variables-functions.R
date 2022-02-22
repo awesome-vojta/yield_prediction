@@ -2,10 +2,18 @@
 
 BELOW <- 4
 ABOVE <- 5
-MOIST <- "Moisture"   # yield moist level
-YIELD <- "VRYIELDMAS" # total yield mass
-SWATH <- "SWATHWIDTH" # swath width (combine gathering)
-DIST <- "DISTANCE"    # distance from last yield measuring point
+
+FLT_DIST <- "DISTANCE"    # distance from last yield measuring point
+FLT_SWATH <- "SWATHWIDTH" # swath width (combine gathering)
+FLT_YIELD <- "VRYIELDMAS" # total yield mass
+FLT_MOIST <- "Moisture"   # yield moist level
+FLT_ELEV <- "Elevation"    # above sea level altitude
+
+ITP_DIST <- 0    # distance from last yield measuring point
+ITP_SWATH <- 1 # swath width (combine gathering)
+ITP_YIELD <- 2 # total yield mass
+ITP_MOIST <- 5   # yield moist level
+ITP_ELEV <- 8    # above sea level altitude
 
 INDEX_CLIP_FOLDER  <- "processing/04_indices_clipped/"
 FILTERED_FOLDER    <- "processing/05_filtered/"
@@ -45,12 +53,12 @@ filter_points <- function (attribute, method, percent, shapefile) {
 filter_all_point_attributes <- function (shapefile, below_percentile, above_percentile) {
   file_name <- get_file_name(shapefile)
   print(file_name)
-  points <- filter_points(YIELD, BELOW, below_percentile, shapefile)
-  points <- filter_points(YIELD, ABOVE, above_percentile, points)
-  points <- filter_points(MOIST, BELOW, below_percentile, points)
-  points <- filter_points(MOIST, ABOVE, above_percentile, points)
-  points <- filter_points(SWATH, BELOW, below_percentile, points)
-  points <- filter_points(DIST, BELOW, below_percentile, points)
+  points <- filter_points(FLT_YIELD, BELOW, below_percentile, shapefile)
+  points <- filter_points(FLT_YIELD, ABOVE, above_percentile, points)
+  points <- filter_points(FLT_MOIST, BELOW, below_percentile, points)
+  points <- filter_points(FLT_MOIST, ABOVE, above_percentile, points)
+  points <- filter_points(FLT_SWATH, BELOW, below_percentile, points)
+  points <- filter_points(FLT_DIST, BELOW, below_percentile, points)
 
   out_path <- paste(FILTERED_FOLDER, file_name, "_", below_percentile, "_", above_percentile, ".shp", sep="")
   st_write(points, out_path, append=FALSE)
@@ -58,17 +66,28 @@ filter_all_point_attributes <- function (shapefile, below_percentile, above_perc
 }
 
 
-interpolate_point_layer <- function(srcfile, pixel_size) {
+interpolate_point_layer <- function(srcfile, str_attribute) {
+  stopifnot(str_attribute == "dist" || str_attribute == "swat" ||
+            str_attribute == "yield" || str_attribute == "moist" || str_attribute == "elev")
+  itp_attribute <- switch(
+    str_attribute,
+    "dist"  = ITP_DIST,
+    "swat"  = ITP_SWATH,
+    "yield" = ITP_YIELD,
+    "moist" = ITP_MOIST,
+    "elev"  = ITP_ELEV
+  )
+
   layer_number <- 0
-  attribute <- 2 # VRYIELDMAS
   type <- 0
   file_name <- sub(pattern = "(.*)\\..*$",
                    replacement = "\\1",
-                   basename(srcfile))
-  out_path <- paste(INTERPOLATE_FOLDER, file_name, "_", pixel_size, "_interpolated.shp", sep="")
+                   basename(srcfile)
+  )
+  out_path <- paste(INTERPOLATE_FOLDER, file_name, "_itp_", str_attribute ,".shp", sep="")
   qgis_run_algorithm(
     "qgis:tininterpolation",
-    INTERPOLATION_DATA = paste(srcfile, layer_number, attribute, type, sep = "::~::"),
+    INTERPOLATION_DATA = paste(srcfile, layer_number, itp_attribute, type, sep = "::~::"),
     METHOD = 0,
     EXTENT = srcfile,
     PIXEL_SIZE = 3,
@@ -82,7 +101,7 @@ interpolate_point_layer <- function(srcfile, pixel_size) {
 # concave masks are required for clipping interpolated layers
 create_mask_from_points <- function(file, alpha) {
   file_name <- get_file_name(file)
-  out_path = paste(MASK_FOLDER, file_name, "_", "mask.shp", sep="")
+  out_path <- paste(MASK_FOLDER, file_name, "_", "mask.shp", sep="")
   
   res <- qgis_run_algorithm(
     "qgis:concavehull",
