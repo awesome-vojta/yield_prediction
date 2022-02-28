@@ -27,6 +27,53 @@ yields_5_95_p <- c(
   raster("lm/yields/yields_5_95_p/s_3_5_95_3_interpolated_aligned_clip.tif"),
   raster("lm/yields/yields_5_95_p/s_4_5_95_3_interpolated_aligned_clip.tif")
 )
+moist_5_95_p <- c(
+  raster("lm/other_attributes/a_dilec_5_95_itp_moist_aligned_clip.tif"),
+  raster("lm/other_attributes/a_mrazirna_5_95_itp_moist_aligned_clip.tif"),
+  raster("lm/other_attributes/a_padelek_5_95_itp_moist_aligned_clip.tif"),
+  raster("lm/other_attributes/a_pod_vysokou_5_95_itp_moist_aligned_clip.tif"),
+  raster("lm/other_attributes/a_vysoka_5_95_itp_moist_aligned_clip.tif"),
+  raster("lm/other_attributes/a_za_jamou_5_95_itp_moist_aligned_clip.tif"),
+  raster("lm/other_attributes/s_1_5_95_itp_moist_aligned_clip.tif"),
+  raster("lm/other_attributes/s_3_5_95_itp_moist_aligned_clip.tif"),
+  raster("lm/other_attributes/s_4_5_95_itp_moist_aligned_clip.tif")
+)
+
+dist_5_95_p <- c(
+  raster("lm/other_attributes/a_dilec_5_95_itp_dist_aligned_clip.tif"),
+  raster("lm/other_attributes/a_mrazirna_5_95_itp_dist_aligned_clip.tif"),
+  raster("lm/other_attributes/a_padelek_5_95_itp_dist_aligned_clip.tif"),
+  raster("lm/other_attributes/a_pod_vysokou_5_95_itp_dist_aligned_clip.tif"),
+  raster("lm/other_attributes/a_vysoka_5_95_itp_dist_aligned_clip.tif"),
+  raster("lm/other_attributes/a_za_jamou_5_95_itp_dist_aligned_clip.tif"),
+  raster("lm/other_attributes/s_1_5_95_itp_dist_aligned_clip.tif"),
+  raster("lm/other_attributes/s_3_5_95_itp_dist_aligned_clip.tif"),
+  raster("lm/other_attributes/s_4_5_95_itp_dist_aligned_clip.tif")
+)
+
+swat_5_95_p <- c(
+  raster("lm/other_attributes/a_dilec_5_95_itp_swat_aligned_clip.tif"),
+  raster("lm/other_attributes/a_mrazirna_5_95_itp_swat_aligned_clip.tif"),
+  raster("lm/other_attributes/a_padelek_5_95_itp_swat_aligned_clip.tif"),
+  raster("lm/other_attributes/a_pod_vysokou_5_95_itp_swat_aligned_clip.tif"),
+  raster("lm/other_attributes/a_vysoka_5_95_itp_swat_aligned_clip.tif"),
+  raster("lm/other_attributes/a_za_jamou_5_95_itp_swat_aligned_clip.tif"),
+  raster("lm/other_attributes/s_1_5_95_itp_swat_aligned_clip.tif"),
+  raster("lm/other_attributes/s_3_5_95_itp_swat_aligned_clip.tif"),
+  raster("lm/other_attributes/s_4_5_95_itp_swat_aligned_clip.tif")
+)
+
+elev_5_95_p <- c(
+  raster("lm/other_attributes/a_dilec_5_95_itp_elev_aligned_clip.tif"),
+  raster("lm/other_attributes/a_mrazirna_5_95_itp_elev_aligned_clip.tif"),
+  raster("lm/other_attributes/a_padelek_5_95_itp_elev_aligned_clip.tif"),
+  raster("lm/other_attributes/a_pod_vysokou_5_95_itp_elev_aligned_clip.tif"),
+  raster("lm/other_attributes/a_vysoka_5_95_itp_elev_aligned_clip.tif"),
+  raster("lm/other_attributes/a_za_jamou_5_95_itp_elev_aligned_clip.tif"),
+  raster("lm/other_attributes/s_1_5_95_itp_elev_aligned_clip.tif"),
+  raster("lm/other_attributes/s_3_5_95_itp_elev_aligned_clip.tif"),
+  raster("lm/other_attributes/s_4_5_95_itp_elev_aligned_clip.tif")
+)
 
 yields_5_95_fm <- c(
   raster("lm/yields/yields_5_95_fm/fm_a_dilec_5_95_3_interpolated_aligned_clip.tif"),

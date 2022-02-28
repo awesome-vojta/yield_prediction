@@ -31,8 +31,19 @@ yield_points_files <- c(
 alpha_per_file <- c(0.03,0.03,0.05,0.03,0.03,0.03,0.1,0.1,0.03,0.03)
 
 files_and_alphas <- data.frame(layer = yield_points_files, alpha = alpha_per_file)
-masks <- apply(files_and_alphas, 1, function(x) create_mask_from_points(x[1], x[2]))
-
+# masks <- apply(files_and_alphas, 1, function(x) create_mask_from_points(x[1], x[2]))
+masks <- c(
+  "processing/07_masks/a_dilec_mask.shp",
+  "processing/07_masks/a_dolni_dil_mask.shp",
+  "processing/07_masks/a_mrazirna_mask.shp",
+  "processing/07_masks/a_padelek_mask.shp",
+  "processing/07_masks/a_pod_vysokou_mask.shp",
+  "processing/07_masks/a_vysoka_mask.shp",
+  "processing/07_masks/a_za_jamou_mask.shp",
+  "processing/07_masks/s_1_mask.shp",
+  "processing/07_masks/s_3_mask.shp",
+  "processing/07_masks/s_4_mask.shp"
+)
 
 
 ### PROCESSING CHAIN ###
@@ -41,16 +52,30 @@ masks <- apply(files_and_alphas, 1, function(x) create_mask_from_points(x[1], x[
 filtered_point_files <- lapply(
   yield_points_files,
   filter_all_point_attributes,
-  below_percentile = 20, above_percentile = 80
+  below_percentile = 5, above_percentile = 95
 )
+# filtered_point_files <- c(
+#   "processing/01_yield_points/a_dilec_5_95.shp",
+#   "processing/01_yield_points/a_dolni_dil_5_95.shp",
+#   "processing/01_yield_points/a_mrazirna_5_95.shp",
+#   "processing/01_yield_points/a_padelek_5_95.shp",
+#   "processing/01_yield_points/a_pod_vysokou_5_95.shp",
+#   "processing/01_yield_points/a_vysoka_5_95.shp",
+#   "processing/01_yield_points/a_za_jamou_5_95.shp",
+#   "processing/01_yield_points/s_1_5_95.shp",
+#   "processing/01_yield_points/s_3_5_95.shp",
+#   "processing/01_yield_points/s_4_5_95.shp"
+# )
+
+
 
 # 2) interpolate each .shp
 yield_points_files_interpolated <- lapply(
   filtered_point_files,
   interpolate_point_layer,
-  pixel_size=3
+  str_attribute = "moist"
 )
-plot(raster(yield_points_files_interpolated[[3]]))
+# plot(raster(yield_points_files_interpolated[[3]]))
 
 
 # 3) convert interpolated onto 10m
