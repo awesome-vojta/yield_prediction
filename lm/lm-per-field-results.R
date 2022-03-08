@@ -1,0 +1,20 @@
+source("lm/lm-per-field-base.R")
+
+
+get_linear_model_for_dataset(yields_5_95_p, ndvis, TRUE)
+get_linear_model_for_dataset(yields_5_95_fm, ndvis_fm, FALSE)
+get_linear_model_for_dataset(yields_10_90_p, ndvis, FALSE)
+get_linear_model_for_dataset(yields_10_90_fm, ndvis_fm, FALSE)
+get_linear_model_for_dataset(yields_15_85_p, ndvis, FALSE)
+get_linear_model_for_dataset(yields_15_85_fm, ndvis_fm, FALSE)
+get_linear_model_for_dataset(yields_20_80_p, ndvis, FALSE)
+get_linear_model_for_dataset(yields_20_80_fm, ndvis_fm, FALSE)
+
+get_linear_model_for_dataset(yields_5_95_p, evis, FALSE)
+get_linear_model_for_dataset(yields_5_95_fm, evis_fm, FALSE)
+get_linear_model_for_dataset(yields_10_90_p, evis, FALSE)
+get_linear_model_for_dataset(yields_10_90_fm, evis_fm, FALSE)
+get_linear_model_for_dataset(yields_15_85_p, evis, FALSE)
+get_linear_model_for_dataset(yields_15_85_fm, evis_fm, FALSE)
+get_linear_model_for_dataset(yields_20_80_p, evis, FALSE)
+get_linear_model_for_dataset(yields_20_80_fm, evis_fm, FALSE)

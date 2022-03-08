@@ -47,5 +47,5 @@ save(fields_10_f, file = "lm/fields/fields_10_f.Rda")
 save(fields_15_f, file = "lm/fields/fields_15_f.Rda")
 save(fields_20_f, file = "lm/fields/fields_20_f.Rda")
 
-save(fields_with_others_5_p, file = "lm/fields/fields_with_others_5_p")
+save(fields_with_others_5_p, file = "lm/fields/fields_with_others_5_p.Rda")
 

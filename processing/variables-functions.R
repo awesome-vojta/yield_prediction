@@ -12,7 +12,7 @@ FLT_ELEV <- "Elevation"    # above sea level altitude
 ITP_DIST <- 0    # distance from last yield measuring point
 ITP_SWATH <- 1 # swath width (combine gathering)
 ITP_YIELD <- 2 # total yield mass
-ITP_MOIST <- 5   # yield moist level
+ITP_MOIST <- 6   # yield moist level
 ITP_ELEV <- 8    # above sea level altitude
 
 INDEX_CLIP_FOLDER  <- "processing/04_indices_clipped/"
