@@ -12,7 +12,7 @@ FLT_ELEV <- "Elevation"    # above sea level altitude
 ITP_DIST <- 0    # distance from last yield measuring point
 ITP_SWATH <- 1 # swath width (combine gathering)
 ITP_YIELD <- 2 # total yield mass
-ITP_MOIST <- 5   # yield moist level
+ITP_MOIST <- 6   # yield moist level
 ITP_ELEV <- 8    # above sea level altitude
 
 INDEX_CLIP_FOLDER  <- "processing/04_indices_clipped/"
@@ -22,8 +22,8 @@ MASK_FOLDER        <- "processing/07_masks/"
 CLIP_FOLDER        <- "processing/08_clip/"
 ALIGNED_FOLDER     <- "processing/09_aligned/"
 
-A_EVI           <- "processing/03_indices/a_EVI.tif"
-S_EVI           <- "processing/03_indices/s_EVI.tif"
+A_EVI           <- "processing/03_indices/a_EVI_corr.tif"
+S_EVI           <- "processing/03_indices/s_EVI_corr.tif"
 A_NDVI          <- "processing/03_indices/a_NDVI.tif"
 S_NDVI          <- "processing/03_indices/s_NDVI.tif"
 
