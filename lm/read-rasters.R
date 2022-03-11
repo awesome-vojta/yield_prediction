@@ -160,27 +160,27 @@ yields_20_80_fm <- c(
 )
 
 ndvis <- c(
-  raster("lm/indices/indices_p/a_dilec_poly_NDVI.tif"),
-  raster("lm/indices/indices_p/a_mrazirna_poly_NDVI.tif"),
-  raster("lm/indices/indices_p/a_padelek_poly_NDVI.tif"),
-  raster("lm/indices/indices_p/a_pod_vysokou_poly_NDVI.tif"),
-  raster("lm/indices/indices_p/a_vysoka_poly_NDVI.tif"),
-  raster("lm/indices/indices_p/a_za_jamou_poly_NDVI.tif"),
-  raster("lm/indices/indices_p/s_1_poly_NDVI.tif"),
-  raster("lm/indices/indices_p/s_3_poly_NDVI.tif"),
-  raster("lm/indices/indices_p/s_4_poly_NDVI.tif")
+  raster("lm/indices/indices_p/a_dilec_mask_NDVI.tif"),
+  raster("lm/indices/indices_p/a_mrazirna_mask_NDVI.tif"),
+  raster("lm/indices/indices_p/a_padelek_mask_NDVI.tif"),
+  raster("lm/indices/indices_p/a_pod_vysokou_mask_NDVI.tif"),
+  raster("lm/indices/indices_p/a_vysoka_mask_NDVI.tif"),
+  raster("lm/indices/indices_p/a_za_jamou_mask_NDVI.tif"),
+  raster("lm/indices/indices_p/s_1_mask_NDVI.tif"),
+  raster("lm/indices/indices_p/s_3_mask_NDVI.tif"),
+  raster("lm/indices/indices_p/s_4_mask_NDVI.tif")
 )
 
 evis <- c(
-  raster("lm/indices/indices_p/a_dilec_poly_EVI.tif"),
-  raster("lm/indices/indices_p/a_mrazirna_poly_EVI.tif"),
-  raster("lm/indices/indices_p/a_padelek_poly_EVI.tif"),
-  raster("lm/indices/indices_p/a_pod_vysokou_poly_EVI.tif"),
-  raster("lm/indices/indices_p/a_vysoka_poly_EVI.tif"),
-  raster("lm/indices/indices_p/a_za_jamou_poly_EVI.tif"),
-  raster("lm/indices/indices_p/s_1_poly_EVI.tif"),
-  raster("lm/indices/indices_p/s_3_poly_EVI.tif"),
-  raster("lm/indices/indices_p/s_4_poly_EVI.tif")
+  raster("lm/indices/indices_p/a_dilec_mask_EVI.tif"),
+  raster("lm/indices/indices_p/a_mrazirna_mask_EVI.tif"),
+  raster("lm/indices/indices_p/a_padelek_mask_EVI.tif"),
+  raster("lm/indices/indices_p/a_pod_vysokou_mask_EVI.tif"),
+  raster("lm/indices/indices_p/a_vysoka_mask_EVI.tif"),
+  raster("lm/indices/indices_p/a_za_jamou_mask_EVI.tif"),
+  raster("lm/indices/indices_p/s_1_mask_EVI.tif"),
+  raster("lm/indices/indices_p/s_3_mask_EVI.tif"),
+  raster("lm/indices/indices_p/s_4_mask_EVI.tif")
 )
 
 ndvis_fm <- c(

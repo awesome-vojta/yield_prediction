@@ -22,8 +22,8 @@ MASK_FOLDER        <- "processing/07_masks/"
 CLIP_FOLDER        <- "processing/08_clip/"
 ALIGNED_FOLDER     <- "processing/09_aligned/"
 
-A_EVI           <- "processing/03_indices/a_EVI.tif"
-S_EVI           <- "processing/03_indices/s_EVI.tif"
+A_EVI           <- "processing/03_indices/a_EVI_corr.tif"
+S_EVI           <- "processing/03_indices/s_EVI_corr.tif"
 A_NDVI          <- "processing/03_indices/a_NDVI.tif"
 S_NDVI          <- "processing/03_indices/s_NDVI.tif"
 
