@@ -14,7 +14,7 @@ get_rmse <- function(tree_model, test_df) {
 }
 
 get_r2 <- function(tree_model, train_df) {
-  r2 <- 1 - sum((train_df$yield - predict(tree_model))^2) /
+  r2 <- 1 - sum((train_df$yield - predict(tree_model))^2) / # sum res sq / sum total sq
     sum((train_df$yield - mean(train_df$yield))^2)
   return(r2)
 }
