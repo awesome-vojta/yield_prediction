@@ -16,6 +16,7 @@ bind_into_df <- function(rasters, value_col_name) {
   return(df)
 }
 
+#TODO: consider converting to Rda as well
 yields_5_95_p <- c(
   raster("lm/yields/yields_5_95_p/a_dilec_5_95_3_interpolated_aligned_clip.tif"),
   raster("lm/yields/yields_5_95_p/a_mrazirna_5_95_3_interpolated_aligned_clip.tif"),

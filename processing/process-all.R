@@ -1,7 +1,14 @@
+# Input: CRS synced data from grain yield monitor
+# Processing:
+#   1) filtering by given percentile
+#   2) interpolating (points to squares) points onto
+
 library(sf)
 library(Rsagacmd)
 library(qgisprocess)
 
+# in order to use QGIS functions, QGIS has to be installed
+# and the path to its qgis_process file has to be specified
 options(qgisprocess.path = "C:/Program Files/QGIS 3.16.11/bin/qgis_process-qgis-ltr.bat")
 options(Rsagacmd.path = "C:/dev/saga-8.0.1_x64/saga_cmd.exe")
 qgis_configure()
