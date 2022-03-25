@@ -45,8 +45,7 @@ masks <- c(
 filtered_point_files <- lapply(
   yield_points_files,
   filter_all_point_attributes,
-  above_percentile = 20,
-  below_percentile = 80
+  quant = 20
 )
 
 # 2) interpolate each .shp

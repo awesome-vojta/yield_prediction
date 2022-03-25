@@ -33,7 +33,6 @@ yield_points_files <- c(
   "processing/01_yield_points/s_3.shp",
   "processing/01_yield_points/s_4.shp"
 )
-# plot(st_read(yield_points_files[2]))
 
 alpha_per_file <- c(0.03,0.03,0.05,0.03,0.03,0.03,0.1,0.1,0.03,0.03)
 
@@ -57,49 +56,34 @@ masks <- c(
 
 # 1) filter each .shp
 filtered_point_files <- lapply(
-  yield_points_files,
-  filter_all_point_attributes,
-  below_percentile = 5, above_percentile = 95
+  X = yield_points_files,
+  FUN = filter_all_point_attributes,
+  quant = 5
 )
-# filtered_point_files <- c(
-#   "processing/01_yield_points/a_dilec_5_95.shp",
-#   "processing/01_yield_points/a_dolni_dil_5_95.shp",
-#   "processing/01_yield_points/a_mrazirna_5_95.shp",
-#   "processing/01_yield_points/a_padelek_5_95.shp",
-#   "processing/01_yield_points/a_pod_vysokou_5_95.shp",
-#   "processing/01_yield_points/a_vysoka_5_95.shp",
-#   "processing/01_yield_points/a_za_jamou_5_95.shp",
-#   "processing/01_yield_points/s_1_5_95.shp",
-#   "processing/01_yield_points/s_3_5_95.shp",
-#   "processing/01_yield_points/s_4_5_95.shp"
-# )
-
-
 
 # 2) interpolate each .shp
 yield_points_files_interpolated <- lapply(
-  filtered_point_files,
-  interpolate_point_layer,
-  str_attribute = "moist"
+  X = filtered_point_files,
+  FUN = interpolate_point_layer,
+  str_attribute = "yield" # "dist", "swat", "yield", "moist", "elev"
 )
-# plot(raster(yield_points_files_interpolated[[3]]))
-
 
 # 3) convert interpolated onto 10m
 # use the big indices_p
 # big indices_p -> big overall pic
-aligned <- lapply(yield_points_files_interpolated, align_layer)
+aligned <- lapply(X = yield_points_files_interpolated, FUN = align_layer)
 
 # 4) cut interpolated 10m layers
 df_to_clip <- data.frame(layer = unlist(aligned), mask = masks)
 interpolated_clipped <- apply(
-  df_to_clip, 1,
-  function(x) clip_interpolated(x[1], x[2])
+  X = df_to_clip,
+  MARGIN = 1,
+  FUN = function(x) clip_interpolated(x[1], x[2])
 )
 
 # 5) cut 10m indices_p
-clipped_EVIs <- lapply(masks, get_clipped_EVI)
-clipped_NDVIs <- lapply(masks, get_clipped_NDVI)
+clipped_EVIs <- lapply(X = masks, FUN = get_clipped_EVI)
+clipped_NDVIs <- lapply(X = masks, FUN = get_clipped_NDVI)
 
 
 
