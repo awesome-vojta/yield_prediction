@@ -3,11 +3,7 @@ library(modelr)     # provides easy pipeline modeling functions
 library(broom)      # helps to tidy up model outputs
 library(rsample)    # data splitting
 
-load("lm/fields/fields_with_others_5_p.Rda")
-load("lm/fields/fields_5_p.Rda")
-fields_with_others_5_p$x <- NULL
-fields_with_others_5_p$y <- NULL
-data <- fields_with_others_5_p
+data <- read.csv("lm/dataframes/p_2.5.csv")
 
 set.seed(123)
 split <- initial_split(data, prop = .7)

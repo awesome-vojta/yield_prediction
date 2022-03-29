@@ -1,55 +1,4 @@
 library(raster)
-# bind_into_df <- function(rasters, value_col_name) {
-#
-#   # initialize empty df
-#   df <- data.frame(double(),double(),double())
-#   colnames(df) <- c("x","y", value_col_name)
-#
-#   # bind
-#   for (raster in rasters) {
-#     raster_df <- as.data.frame(raster, xy=TRUE)
-#     colnames(raster_df) <- c("x","y", value_col_name)
-#     no_missing_values <- raster_df[complete.cases(raster_df), ]
-#     df <- rbind(df, no_missing_values)
-#   }
-#   return(df)
-# }
-#
-#
-# names <- c("a_dilec","a_mrazirna","a_padelek","a_pod_vysokou","a_vysoka","a_za_jamou","s_1","s_3")
-# quants <- c(2.5, 5, 7.5, 10)
-# vars <- c("yield", "elev", "moist", "swat", "dist")
-# str <- expand.grid(vars, names, quants)
-# str$Var4 <- 100-str$Var3
-#
-# paths <- paste0("processing/out/", str$Var2, "_", str$Var3, "_", str$Var4, "_itp_", str$Var1, "_aligned_clip.tif")
-# fm_paths <- paste0("processing/out/fm_", str$Var2, "_", str$Var3, "_", str$Var4, "_itp_", str$Var1, "_aligned_clip.tif")
-# evis_paths <- paste0("processing/out/", str$Var2, "_", str$Var3, "_", str$Var4, "_mask_EVI.tif")
-# ndvis_paths <- paste0("processing/out/", str$Var2, "_", str$Var3, "_", str$Var4, "_mask_NDVI.tif")
-#
-# rasters <- lapply(X=paths, FUN=raster)
-# fm_rasters <- lapply(X=fm_paths, FUN=raster)
-# evi_rasters <- lapply(X=evis_paths, FUN=raster)
-# ndvi_rasters <- lapply(X=ndvis_paths, FUN=raster)
-#
-#
-# dfs <- lapply(X=rasters, FUN=as.data.frame)
-# df2.5 <- data.frame(double(),double(),double(),double(),double())
-# colnames(df) <- vars
-# yield_coord <- seq(1,45,5)
-# df$yield <- dfs[seq(1, 45, 5)] # po peti do 40
-#
-#
-#
-#
-# vars <- c("yield", "elev", "moist", "swat", "dist")
-# str <- expand.grid(vars, names)
-#
-#
-# names <- c("a_dilec","a_mrazirna","a_padelek","a_pod_vysokou","a_vysoka","a_za_jamou","s_1","s_3")
-# y_paths <- paste0("processing/out/", names, "_2.5_97.5_itp_yield_aligned_clip.tif")
-# e_paths <- paste0("processing/out/", names, "_2.5_97.5_mask_EVI.tif")
-# n_paths <- paste0("processing/out/", names, "_2.5_97.5_mask_NDVI.tif")
 
 get_variable_df <- function(prefix, quant, str_variable) {
   stopifnot(str_variable %in% c("yield", "elev", "moist", "swat", "dist"))
@@ -115,12 +64,12 @@ f_5 <- get_whole("fm_", 5)
 f_7.5 <- get_whole("fm_", 7.5)
 f_10 <- get_whole("fm_", 10)
 
-save(p_2.5, file = "lm/dataframes/p_2.5.Rda")
-save(p_5,   file = "lm/dataframes/p_5.Rda")
-save(p_7.5, file = "lm/dataframes/p_7.5.Rda")
-save(p_10,  file = "lm/dataframes/p_10.Rda")
+write.csv(p_2.5, file = "lm/dataframes/p_2.5.csv")
+write.csv(p_5,   file = "lm/dataframes/p_5.csv")
+write.csv(p_7.5, file = "lm/dataframes/p_7.5.csv")
+write.csv(p_10,  file = "lm/dataframes/p_10.csv")
 
-save(f_2.5, file = "lm/dataframes/f_2.5.Rda")
-save(f_5,   file = "lm/dataframes/f_5.Rda")
-save(f_7.5, file = "lm/dataframes/f_7.5.Rda")
-save(f_10,  file = "lm/dataframes/f_10.Rda")
+write.csv(f_2.5, file = "lm/dataframes/f_2.5.csv")
+write.csv(f_5,   file = "lm/dataframes/f_5.csv")
+write.csv(f_7.5, file = "lm/dataframes/f_7.5.csv")
+write.csv(f_10,  file = "lm/dataframes/f_10.csv")
