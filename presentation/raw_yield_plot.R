@@ -3,16 +3,16 @@ library(ggplot2)
 library(gridExtra)
 
 shapes <- c(
-  "processing/in/a_dilec.shp",
-  # "processing/in/a_dolni_dil.shp",  ! NOT suitable for manual filtering
-  "processing/in/a_mrazirna.shp",
-  "processing/in/a_padelek.shp",
-  "processing/in/a_pod_vysokou.shp",
-  "processing/in/a_vysoka.shp",
-  "processing/in/a_za_jamou.shp",
-  "processing/in/s_1.shp",
-  "processing/in/s_3.shp"
-  # "processing/in/s_4.shp"    ! NOT suitable for manual filtering
+  "preprocessing/in/a_dilec.shp",
+  # "preprocessing/in/a_dolni_dil.shp",  ! NOT suitable for manual filtering
+  "preprocessing/in/a_mrazirna.shp",
+  "preprocessing/in/a_padelek.shp",
+  "preprocessing/in/a_pod_vysokou.shp",
+  "preprocessing/in/a_vysoka.shp",
+  "preprocessing/in/a_za_jamou.shp",
+  "preprocessing/in/s_1.shp",
+  "preprocessing/in/s_3.shp"
+  # "preprocessing/in/s_4.shp"    ! NOT suitable for manual filtering
 )
 
 
