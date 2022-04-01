@@ -5,7 +5,7 @@ library(raster)
 options(qgisprocess.path = "C:/Program Files/QGIS 3.16.11/bin/qgis_process-qgis-ltr.bat")
 qgis_configure()
 setwd("C:/Users/vojte/Documents/01_VSE/00_baka/05_r_proj")
-source(file = "processing/variables-functions.R")
+source(file = "preprocessing/variables-functions.R")
 
 
 # alpha_per_file <- c(0.03,0.03,0.05,0.03,0.03,0.03,0.1,0.1,0.03,0.03)

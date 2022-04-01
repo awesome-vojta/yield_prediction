@@ -37,7 +37,7 @@ bagged_cv
 # 15296 samples
 #     6 predictor
 #
-# No pre-processing
+# No pre-preprocessing
 # Resampling: Cross-Validated (10 fold)
 # Summary of sample sizes: 13767, 13768, 13766, 13765, 13766, 13768, ...
 # Resampling results:

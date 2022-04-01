@@ -1,8 +1,8 @@
 library(raster)
 
-blue <- as.data.frame(raster("processing/02_bands_clipped/s_bands/1_B02_10m.tif"), xy=TRUE)
-red <- as.data.frame(raster("processing/02_bands_clipped/s_bands/1_B04_10m.tif"), xy=TRUE)
-nir <- as.data.frame(raster("processing/02_bands_clipped/s_bands/1_B08_10m.tif"), xy=TRUE)
+blue <- as.data.frame(raster("preprocessing/02_bands_clipped/s_bands/1_B02_10m.tif"), xy=TRUE)
+red <- as.data.frame(raster("preprocessing/02_bands_clipped/s_bands/1_B04_10m.tif"), xy=TRUE)
+nir <- as.data.frame(raster("preprocessing/02_bands_clipped/s_bands/1_B08_10m.tif"), xy=TRUE)
 
 EVI <- as.data.frame(matrix(nrow = nrow(blue), ncol = 6))
 colnames(EVI) <- c("x","y","blue","red","nir","evi")
@@ -19,7 +19,7 @@ EVI$red <- NULL
 EVI$nir <- NULL
 
 r <- rasterFromXYZ(EVI)
-r1 <- raster("processing/03_indices/s_EVI.tif")
+r1 <- raster("preprocessing/03_indices/s_EVI.tif")
 r1_df <- as.data.frame(r1, xy=TRUE)
 crs(r) <- crs(r1)
-writeRaster(r, "processing/03_indices/s_EVI_corr.tif")
+writeRaster(r, "preprocessing/03_indices/s_EVI_corr.tif")
