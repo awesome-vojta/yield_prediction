@@ -29,15 +29,15 @@ assess <- function(path, index) {
   # RSE
   # prumerna odchylka yieldu je 1.64 tun
   rse <- sigma(model1)
-  writeLines(paste0("RSE = ", round(rse,2)))
+  writeLines(paste0("RSE = ", round(rse,4)))
 
   # procetni chyba
   err <- sigma(model1)/mean(train$YIELD)
-  writeLines(paste0("%err = ", round(err,2)))
+  writeLines(paste0("%err = ", round(err,4)))
 
   # 43% je proporce rozptylu kterou model dokaze vysvetlit
   r2 <- rsquare(model1, data = train)
-  writeLines(paste0("R^2 = ", round(r2,2)))
+  writeLines(paste0("R^2 = ", round(r2,4)))
 
 
   (test <- test %>%
@@ -45,12 +45,12 @@ assess <- function(path, index) {
   testMSE <- test %>%
     add_predictions(model1) %>%
     summarise(MSE = mean((YIELD - pred)^2))
-  writeLines(paste0("testMSE = ", round(testMSE,2)))
+  writeLines(paste0("testMSE = ", round(testMSE,4)))
 
   trainMSE <-train %>%
     add_predictions(model1) %>%
     summarise(MSE = mean((YIELD - pred)^2))
-  writeLines(paste0("trainMSE = ", round(trainMSE,2)))
+  writeLines(paste0("trainMSE = ", round(trainMSE,4)))
 }
 
 assess("data/p_2.5.csv", "NDVI")
