@@ -7,6 +7,8 @@ library(rpart.plot)  # plotting regression trees
 library(ipred)       # bagging
 library(caret)       # bagging
 
+source("models/rt/metrics.R")
+
 assess <- function(path, index) {
   stopifnot(index == "NDVI" | index == "EVI")
   if(index == "NDVI") {
@@ -26,7 +28,7 @@ assess <- function(path, index) {
   ctrl <- trainControl(method = "cv",  number = 10)
 
   # cross-validated bagged model
-  m1 <- train(
+  model <- train(
     formula,
     data = train,
     method = "treebag",
@@ -34,13 +36,10 @@ assess <- function(path, index) {
     importance = TRUE
     )
 
-  r2 <- m1$results$Rsquared
-  trainMSE <- sqrt(RMSE(pred = predict(m1, newdata = train), obs = train$YIELD))
-  testMSE <- sqrt(RMSE(pred = predict(m1, newdata = test), obs = test$YIELD))
+  r2 <- model$results$Rsquared
 
   writeLines(paste0("R^2 = ", round(r2,5)))
-  writeLines(paste0("trainMSE = ", round(trainMSE,5)))
-  writeLines(paste0("testMSE = ", round(testMSE,5)))
+  write_MSE(model, test_set = test, train_set = train, round = 5)
   writeLines(paste0(" "))
 }
 

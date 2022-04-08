@@ -6,6 +6,8 @@ library(rpart)
 library(rpart.plot)
 library(caret)
 
+source("models/rt/metrics.R")
+
 get_cp <- function(model) {
   min    <- which.min(model$cptable[, "xerror"])
   cp <- model$cptable[min, "CP"]
@@ -31,23 +33,20 @@ assess <- function(path) {
   test  <- testing(data_split)
 
   ########### Basic implementation -----------
-  m1 <- rpart(
+  model <- rpart(
     formula = YIELD ~ .,
     data    = train,
     method  = "anova"
     )
 
-  cp <- as.data.frame(m1$cptable)
+  cp <- as.data.frame(model$cptable)
   splits <- cp$nsplit[nrow(cp)]
   r2 <- 1 - cp$`rel error`[nrow(cp)]
   xerr <- cp$xerror[nrow(cp)]
-  trainMSE <- sqrt(RMSE(pred = predict(m1, newdata = train), obs = train$YIELD))
-  testMSE <- sqrt(RMSE(pred = predict(m1, newdata = test), obs = test$YIELD))
 
   writeLines(paste0("R^2 = ", round(r2,5)))
   writeLines(paste0("xerr = ", round(xerr,5)))
-  writeLines(paste0("trainMSE = ", round(trainMSE,5)))
-  writeLines(paste0("testMSE = ", round(testMSE,5)))
+  write_MSE(model, test_set = test, train_set = train, round = 5)
   writeLines(paste0("splits = ", splits))
   writeLines(paste0(""))
 
@@ -82,23 +81,20 @@ assess <- function(path) {
     top_n(-5, wt = error)
 
 
-  opt_tree <- rpart(
+  opt_model <- rpart(
       formula = YIELD ~ .,
       data    = train,
       method  = "anova",
       control = list(minsplit = opt_grid$minsplit[1], maxdepth = opt_grid$maxdepth[1], cp = 0.01)
       )
-  opt_cp <- as.data.frame(opt_tree$cptable)
+  opt_cp <- as.data.frame(opt_model$cptable)
 
   r2 <- 1 - opt_cp$`rel error`[nrow(opt_cp)]
   splits <- opt_cp$nsplit[nrow(opt_cp)]
   xerr <- opt_cp$xerror[nrow(opt_cp)]
-  trainMSE <- sqrt(RMSE(pred = predict(opt_tree, newdata = train), obs = train$YIELD))
-  testMSE <- sqrt(RMSE(pred = predict(opt_tree, newdata = test), obs = test$YIELD))
   writeLines(paste0("opt R^2 = ", round(r2,5)))
   writeLines(paste0("opt xerr = ", round(xerr,5)))
-  writeLines(paste0("opt trainMSE = ", round(trainMSE,5)))
-  writeLines(paste0("opt testMSE = ", round(testMSE,5)))
+  write_MSE(opt_model, test_set = test, train_set = train, round = 5)
   writeLines(paste0("splits = ", splits))
   writeLines(paste0("------------"))
 

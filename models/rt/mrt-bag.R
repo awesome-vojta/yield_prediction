@@ -7,6 +7,9 @@ library(rpart.plot)  # plotting regression trees
 library(ipred)       # bagging
 library(caret)       # bagging
 
+source("models/rt/metrics.R")
+
+
 assess <- function(path) {
   writeLines(paste0(path))
   data <- read.csv(path)
@@ -17,22 +20,18 @@ assess <- function(path) {
 
   ctrl <- trainControl(method = "cv",  number = 10)
 
-  m1 <- train(
+  model <- train(
     YIELD ~ .,
     data = train,
     method = "treebag",
     trControl = ctrl,
     importance = TRUE
   )
-  plot(varImp(m1), 20)
+  plot(varImp(model), 20)
 
-  r2 <- m1$results$Rsquared
-  trainMSE <- sqrt(RMSE(pred = predict(m1, newdata = train), obs = train$YIELD))
-  testMSE <- sqrt(RMSE(pred = predict(m1, newdata = test), obs = test$YIELD))
-
+  r2 <- model$results$Rsquared
   writeLines(paste0("R^2 = ", round(r2,5)))
-  writeLines(paste0("trainMSE = ", round(trainMSE,5)))
-  writeLines(paste0("testMSE = ", round(testMSE,5)))
+  write_MSE(model, test_set = test, train_set = train, round = 5)
   writeLines(paste0(" "))
 }
 
