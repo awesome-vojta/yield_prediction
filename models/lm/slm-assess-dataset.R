@@ -3,6 +3,7 @@ library(modelr)     # provides easy pipeline modeling functions
 library(broom)      # helps to tidy up model outputs
 library(rsample)    # data splitting
 
+source("models/lm/metrics.R")
 
 assess <- function(path, index) {
   stopifnot(index == "NDVI" || index == "EVI")
@@ -17,41 +18,12 @@ assess <- function(path, index) {
   test  <- testing(split)
 
   if(index == "NDVI") {
-    model1 <- lm(YIELD ~ NDVI, data = train)
+    model <- lm(YIELD ~ NDVI, data = train)
   } else {
-    model1 <- lm(YIELD ~ EVI, data = train)
+    model <- lm(YIELD ~ EVI, data = train)
   }
 
-  ########### Assessing model -----------
-  eq <- tidy(model1)
-  writeLines(paste0(round(eq$estimate[1],2), " + ", round(eq$estimate[2],2), "x"))
-
-  # RSE
-  # prumerna odchylka yieldu je 1.64 tun
-  rse <- sigma(model1)
-  writeLines(paste0("RSE = ", round(rse,4)))
-
-  # procetni chyba
-  err <- sigma(model1)/mean(train$YIELD)
-  writeLines(paste0("%err = ", round(err,4)))
-
-  # 43% je proporce rozptylu kterou model dokaze vysvetlit
-  r2 <- rsquare(model1, data = train)
-  writeLines(paste0("R^2 = ", round(r2,4)))
-
-
-  test <- test %>%
-  add_predictions(model1)
-
-  testMSE <- test %>%
-    add_predictions(model1) %>%
-    summarise(MSE = mean((YIELD - pred)^2))
-  writeLines(paste0("testMSE = ", round(testMSE,4)))
-
-  trainMSE <-train %>%
-    add_predictions(model1) %>%
-    summarise(MSE = mean((YIELD - pred)^2))
-  writeLines(paste0("trainMSE = ", round(trainMSE,4)))
+  write_lm_assessment(model, test, train, 4)
 }
 
 assess("data/p_2.5.csv", "NDVI")
