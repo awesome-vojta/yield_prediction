@@ -35,8 +35,9 @@ assess <- function(path) {
   writeLines(paste0("R^2 = ", round(r2,4)))
 
 
-  (test <- test %>%
-  add_predictions(model1))
+  test <- test %>%
+  add_predictions(model1)
+
   testMSE <- test %>%
     add_predictions(model1) %>%
     summarise(MSE = mean((YIELD - pred)^2))
