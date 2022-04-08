@@ -1,5 +1,3 @@
-## Multiple variable regression tree
-
 library(rsample)
 library(dplyr)
 library(rpart)
@@ -7,6 +5,8 @@ library(rpart.plot)
 library(caret)
 
 source("models/rt/metrics.R")
+
+#' Table 2-5: Classic and optimized multi-variable tree models
 
 get_cp <- function(model) {
   min    <- which.min(model$cptable[, "xerror"])

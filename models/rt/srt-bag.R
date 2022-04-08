@@ -1,13 +1,13 @@
-## Single variable regression tree - bagged
-
-library(rsample)     # data splitting
-library(dplyr)       # data wrangling
-library(rpart)       # performing regression trees
-library(rpart.plot)  # plotting regression trees
-library(ipred)       # bagging
-library(caret)       # bagging
+library(rsample)
+library(dplyr)
+library(rpart)
+library(rpart.plot)
+library(ipred)
+library(caret)
 
 source("models/rt/metrics.R")
+
+#' Table 2-4: Single-variable bagged tree models
 
 assess <- function(path, index) {
   stopifnot(index == "NDVI" | index == "EVI")

@@ -1,9 +1,11 @@
-library(tidyverse)  # data manipulation and visualization
-library(modelr)     # provides easy pipeline modeling functions
-library(broom)      # helps to tidy up model outputs
-library(rsample)    # data splitting
+library(tidyverse)
+library(modelr)
+library(broom)
+library(rsample)
 
 source("models/lm/metrics.R")
+
+#' Table 2-2: Multiple linear regression model assessment
 
 assess <- function(path) {
   writeLines("")
